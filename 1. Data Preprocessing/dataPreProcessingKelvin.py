@@ -7,7 +7,15 @@ from collections import Counter
 with open("proj1_data.json") as fp:
     data = json.load(fp)
 
-
+'''
+Label Ordering
+    {'text': String ,
+        'is_root': boolean,
+        'controversiality': int,
+        'children': float,
+        'popularity_score': float
+    }
+'''
 #PRIMARY VARIABLES
 X = []
 y = []
@@ -22,7 +30,7 @@ counter = Counter()
 
 #PREPROCESSING HELPER FUNCTIONS
 
-#
+#Splits text
 def splitText(text):
     lowerCaseText =  text.lower()
     splitText = lowerCaseText.split()
@@ -35,13 +43,15 @@ def construct_dataset(d):
     for p in d:
         temp = []
         for info_name, info_value in p.items():
-            if (info_name == "popularity_score"):
+            if (info_name == "text")
+            #WHOLE LOTTA GANG SHIT
+            else if (info_name == "popularity_score"):
                 y.append(info_value)
-            if (info_name == "is_root"):
+            else if (info_name == "is_root"):
                 if (info_value == "true"):
-                    y.append(1)
+                    temp.append(1)
                 else:
-                    y.append(0)
+                    temp.append(0)
             else:
                 temp.append(info_value)
         print(".")

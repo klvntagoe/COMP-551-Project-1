@@ -10,6 +10,12 @@ def preProcessing(string):
     for word in split:
         processed_text.append(word)
 
+def splitText(text):
+    lowerCaseText =  text.lower()
+    splitText = lowerCaseText.split()
+    return splitText
+
+
 #DATA CONSTRUCTION
 def construct_dataset(d):
     for p in d:

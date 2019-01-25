@@ -1,5 +1,6 @@
 import json
 import numpy as np
+from collections import Counter
 
 
 #DATA LOAD
@@ -16,6 +17,17 @@ cross_validation_X = []
 cross_validation_Y = []
 testing_X = []
 testing_Y = []
+counter = Counter()
+
+
+#PREPROCESSING HELPER FUNCTIONS
+
+#
+def splitText(text):
+    lowerCaseText =  text.lower()
+    splitText = lowerCaseText.split()
+    return splitText
+        
 
 
 #DATA CONSTRUCTION

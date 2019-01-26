@@ -50,8 +50,8 @@ def topFrequencies(dictionaryList):
             countVariable[word] += 1
     return dict(countVariable.most_common(160))
 
-#Convert list of tuples of (word, frequency) to (word, ranking)
-def convertTupleList(list):
+#Convert list of key-value pairs (word, frequency) to (word, ranking)
+def convertFrequenciesToRankings(list):
     i = 0
     newList = {}
     for word in list:
@@ -69,7 +69,7 @@ def constructWordCountVector(text):
     return vector
 
 mostFrequentWords = topFrequencies(data)
-rankingOfMostFrequentWords = convertTupleList(mostFrequentWords)
+rankingOfMostFrequentWords = convertFrequenciesToRankings(mostFrequentWords)
 
 
 

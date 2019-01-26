@@ -1,7 +1,7 @@
 import numpy as np 
 
 
-#LOADING DATA
+#LOAD DATA
 weights = []
 training_X = np.load("training_data_X.npy")
 training_Y = np.load("training_data_Y.npy")
@@ -11,3 +11,22 @@ testing_X = np.load("testing_data_X.npy")
 testing_Y = np.load("testing_data_Y.npy")
 print("Dataset Loaded\n")
 
+
+#NORMAL EQUATION SOLVER
+def normalEquation(X, Y):
+    XT = X.transpose()
+    XTX = np.matmul(XT, X)
+    a = np.linalg.solve(XTX, np.identity(len(XTX)))
+    temp = np.matmul(a, XT)
+    w = np.matmul(temp, Y)
+    return w
+
+
+#WEIGHTS LEARNING FUNCTION CALLS
+weights = normalEquation(training_X, training_Y)
+print("Weights Learned\n")
+
+
+#SAVING WEIGHTS
+np.save("weights_NE.npy", weights)
+print("Weights Saved\n")

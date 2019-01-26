@@ -12,16 +12,16 @@ with open("proj1_data.json") as fp:
 Label Ordering
     {'text': String ,
         'is_root': boolean,
-        'controversiality': int,
-        'children': float,
+        'controversiality': boolean,
+        'children': int,
         'popularity_score': float
     }
 '''
 
 #PRIMARY VARIABLES
-countVariable = Counter()
 labels = data[0].keys()
 mostFrequentWords = {}
+rankingOfMostFrequentWords = {}
 X = []
 y = []
 training_X = []
@@ -30,7 +30,6 @@ cross_validation_X = []
 cross_validation_Y = []
 testing_X = []
 testing_Y = []
-counter = Counter()
 
 
 
@@ -42,38 +41,54 @@ def splitText(text):
     splitText = lowerCaseText.split()
     return splitText
 
-#Count the frequencies of tokens
-def countFrequencies(textArray):
-    for word in textArray:
-        countVariable[word] += 1
-
 #Find top 160 frequently occurring word in 'data'
 def topFrequencies(dictionaryList):
+    countVariable = Counter()
     for item in dictionaryList:
-        splited_text = splitText(item['text'])
-        countFrequencies(splited_text)
-        return dict(countVariable.most_common(160))
+        splitted_text = splitText(item['text'])
+        for word in splitted_text:
+            countVariable[word] += 1
+    return dict(countVariable.most_common(160))
+
+#Convert list of tuples of (word, frequency) to (word, ranking)
+def convertTupleList(list):
+    i = 0
+    newList = {}
+    for word in list:
+        newList[word] = i
+        i+=1
+    return newList
+
+#Construct a word count vector from a comment
+def constructWordCountVector(text):
+    vector = [0]*160
+    splitted_text = splitText(text)
+    for word in splitted_text:
+        i = rankingOfMostFrequentWords.get(word, -1)
+        if (i != -1): vector[i] += 1
+    return vector
 
 mostFrequentWords = topFrequencies(data)
+rankingOfMostFrequentWords = convertTupleList(mostFrequentWords)
 
 
 
 #DATASET CONSTRUCTION
 def construct_dataset(d):
     for p in d:
-        temp = []
-        for name, value in p.items():
-            if (name == "popularity_score"):
+        training_example = []
+        for key, value in p.items():
+            if (key == "popularity_score"):
                 y.append(value)
-            elif (name == "is_root"):
-                if (value == True): temp.append(1)
-                elif (value == False): temp.append(0)
-            elif (name == "text"):
-                print(".")
-                #WHOLE LOTTA (GANG) SHIT TO BE DONE HERE
+            elif (key == "is_root"):
+                if (value == True): training_example.append(1)
+                elif (value == False): training_example.append(0)
+            elif (key == "text"):
+                vector = constructWordCountVector(value)
+                training_example.extend(vector)
             else:
-                temp.append(value)
-        X.append(temp)
+                training_example.append(value)
+        X.append(training_example)
 
 
 

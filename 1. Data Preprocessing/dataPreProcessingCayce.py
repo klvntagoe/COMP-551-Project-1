@@ -15,7 +15,6 @@ def splitText(text):
     splitText = lowerCaseText.split()
     return splitText
 
-
 #DATA CONSTRUCTION
 def construct_dataset(d):
     for p in d:

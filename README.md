@@ -1,3 +1,2 @@
 # COMP-551-Project-1
-Linear Regression
-Changes from Andrea
+Linear Regression on Reddit Comments
